@@ -100,23 +100,23 @@ import { fileURLToPath } from "url";
 // Load env variables
 dotenv.config();
 
-// Connect to DB
-connectDB();
-
 const app = express();
-
-// Get current directory (for local testing if needed)
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Serve static files (uploads folder, mostly for local testing)
+// DB Connection (optimized for serverless)
+await connectDB();
+
+// Get current directory (for local testing if needed)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static files (uploads folder — optional)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Root route to prevent 404
+// Root route
 app.get("/", (req, res) => {
   res.status(200).send("Backend is running on Vercel!");
 });
@@ -125,7 +125,8 @@ app.get("/", (req, res) => {
 app.use("/api/admin", adminRoutes);
 app.use("/api/blogs", blogRoutes);
 
-// Export app for Vercel (no app.listen())
-export default app;
-
-
+// ❌ DO NOT use app.listen() on Vercel
+// ✅ Instead, export a handler
+export default function handler(req, res) {
+  return app(req, res);
+}
