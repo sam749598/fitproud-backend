@@ -57,6 +57,7 @@ import adminRoutes from "./routes/adminRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import sitemapRouter from "./routes/sitemap.js";
 
 // Load environment variables
 dotenv.config();
@@ -81,6 +82,7 @@ app.get("/", (req, res) => {
 // API routes
 app.use("/api/admin", adminRoutes);
 app.use("/api/blogs", blogRoutes);
+app.use("/", sitemapRouter);
 
 // Export app for Vercel (no app.listen)
 export default app;
