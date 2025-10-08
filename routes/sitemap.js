@@ -18,14 +18,7 @@ router.get("/sitemap.xml", async (req, res) => {
       "/privacy",
       "/affiliate-disclaimers",
       "/blog",
-
-      // Add your social profiles here:
-       "https://www.facebook.com/vitaprozen",
-       "https://www.youtube.com/@vitaprozen",
-       "https://www.instagram.com/vitaprozen/",
-       "https://www.pinterest.com/vitaprozen/"
-
-
+      
     ];
 
     // Build XML for static pages
